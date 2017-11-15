@@ -66,10 +66,26 @@ class LinearRegression(object):
 
         return valReturn
 
-    def resolveLinearRegression(self):
+    def _resolveLinearRegression(self):
         aMatrix = self._calculateAmatrix()
         yMatrix = self._calculateYmatrix()
         xVector = numpy.linalg.solve(aMatrix, yMatrix)
-        print("Vetor X é {}".format(xVector)) # phi(x) = ax + b
+        print("Vetor X é {}".format(xVector))
+        return xVector
 
+    def _getPhi(self, x):
+        """
+        phi(x) = ax + b
+        :param x:
+        :return:
+        """
+        xVector = self._resolveLinearRegression()
+        return xVector[1]*x + xVector[0]
 
+    def getLinearFunction(self):
+        returnArr = []
+
+        for x in range(len(self.xValues)):
+            returnArr.insert(x, self._getPhi(x))
+
+        return returnArr
