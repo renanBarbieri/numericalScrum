@@ -70,7 +70,6 @@ class LinearRegression(object):
         aMatrix = self._calculateAmatrix()
         yMatrix = self._calculateYmatrix()
         xVector = numpy.linalg.solve(aMatrix, yMatrix)
-        print("Vetor X é {}".format(xVector))
         return xVector
 
     def _getPhi(self, x):
@@ -85,7 +84,29 @@ class LinearRegression(object):
     def getLinearFunction(self):
         returnArr = []
 
-        for x in range(len(self.xValues)):
+        for x in range(self._getXSize()):
             returnArr.insert(x, self._getPhi(x))
 
         return returnArr
+
+    def _getXSize(self):
+        return int(self._getZeroFunction())+5
+
+    def getXAxis(self):
+        xAxis = []
+
+        for x in range(self._getXSize()):
+            xAxis.insert(x, x)
+
+        return xAxis
+
+    def _getZeroFunction(self):
+        """
+        x = -b/a
+        :return:
+        """
+        xVector = self._resolveLinearRegression()
+        print("Vetor X é {}".format(xVector))
+        yZero = -xVector[0]/xVector[1]
+        print("A entrega está prevista para o dia {}".format(yZero))
+        return yZero

@@ -14,7 +14,7 @@ class Application(object):
         linearReg = LinearRegression(self._days, self._remaningPoints)
 
         plt.plot(self._days, self._remaningPoints)
-        plt.plot(self._days, linearReg.getLinearFunction())
+        plt.plot(linearReg.getXAxis(), linearReg.getLinearFunction())
         self._plotGraph()
 
     def _initGraph(self):
