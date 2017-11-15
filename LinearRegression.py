@@ -3,15 +3,14 @@ import numpy
 
 class LinearRegression(object):
 
-    xValues = []
-    yValues = []
+    _xValues = []
+    _yValues = []
 
     def __init__(self, xInputs, yInputs):
         self.xValues = xInputs
         self.yValues = yInputs
 
-
-    def calculateAmatrix(self):
+    def _calculateAmatrix(self):
         """
         Gera a matriz A(T)*A da função aproximadora
         :return: matriz A(T)*A
@@ -19,16 +18,15 @@ class LinearRegression(object):
         print("Calculando a matriz A ...")
         matrixA = []
 
-        for i in range(len(self.yValues)):
+        for i in range(0, 2):
             matrixA.append([])
             for j in range(0, 2):
-                matrixA[i].append(self.calculateSumForAmatrix(i + j))
+                matrixA[i].append(self._calculateSumForAmatrix(i + j))
 
         print(matrixA)
         return matrixA
 
-
-    def calculateYmatrix(self):
+    def _calculateYmatrix(self):
         """
         Gera a matriz A(T)*Y da função aproximadora
         :return: matriz A(T)*Y
@@ -36,14 +34,13 @@ class LinearRegression(object):
         print("Calculando a matriz Y ...")
         matrixY = []
 
-        for i in range(len(self.yValues)):
-            matrixY.insert(i, self.calculateSumForYmatrix(i))
+        for i in range(0, 2):
+            matrixY.insert(i, self._calculateSumForYmatrix(i))
 
         print(matrixY)
         return matrixY
 
-
-    def calculateSumForAmatrix(self, j):
+    def _calculateSumForAmatrix(self, j):
         """
         Realiza o somátorio do elemento (i,j) para ser posto na matriz a.
         :param j: potencia do somatório
@@ -56,8 +53,7 @@ class LinearRegression(object):
 
         return valReturn
 
-
-    def calculateSumForYmatrix(self, j):
+    def _calculateSumForYmatrix(self, j):
         """
         Realiza o somátorio do elemento (j) para ser posto na matriz A(T)*Y.
         :param j: potencia do somatório
@@ -70,9 +66,10 @@ class LinearRegression(object):
 
         return valReturn
 
-
     def resolveLinearRegression(self):
-        aMatrix = self.calculateAmatrix()
-        yMatrix = self.calculateYmatrix()
+        aMatrix = self._calculateAmatrix()
+        yMatrix = self._calculateYmatrix()
         xVector = numpy.linalg.solve(aMatrix, yMatrix)
-        print("Vetor X é {}".format(xVector))
+        print("Vetor X é {}".format(xVector)) # phi(x) = ax + b
+
+

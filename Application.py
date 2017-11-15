@@ -8,5 +8,6 @@ class Application(object):
     remaningPoints = [270, 250, 200, 180, 150, 120, 100, 80, 78, 40]
 
     def __init__(self):
-        LinearRegression(self.days, self.remaningPoints).resolveLinearRegression()
+        linearReg = LinearRegression(self.days, self.remaningPoints)
+        linearReg.resolveLinearRegression()
 
