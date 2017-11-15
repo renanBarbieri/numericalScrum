@@ -1,4 +1,4 @@
-import numpy
+
 
 # Dias em que as medições foram realizadas
 days = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -8,30 +8,70 @@ remaningPoints = [270, 250, 200, 180, 150, 120, 100, 80, 78, 40]
 #Caso 1: Aproximar o gráfico para uma reta
 # phi(x) = A*x + b
 
-def generateMatrix():
+
+def calculateAmatrix():
     """
-    Gera a matriz A da função aproximadora
-    :return: matriz A
+    Gera a matriz A(T)*A da função aproximadora
+    :return: matriz A(T)*A
     """
+    print("Calculando a matriz A ...")
     matrixA = []
 
     for i in range(len(remaningPoints)):
-        # Cada y(x) representa uma linha com um vetor de valores (que valores?)
         matrixA.append([])
-        for j in range(len(days)):
-            matrixA[i].append(sumFunction(i, j))
+        for j in range(0, 2):
+            matrixA[i].append(calculateSumForAmatrix(i + j))
 
     print(matrixA)
     return matrixA
 
 
-def sumFunction(i,j):
+def calculateYmatrix():
+    """
+    Gera a matriz A(T)*Y da função aproximadora
+    :return: matriz A(T)*Y
+    """
+    print("Calculando a matriz Y ...")
+    matrixY = []
+
+    for i in range(len(remaningPoints)):
+        matrixY.insert(i, calculateSumForYmatrix(i))
+
+    print(matrixY)
+    return matrixY
+
+
+def calculateSumForAmatrix(j):
     """
     Realiza o somátorio do elemento (i,j) para ser posto na matriz a.
-    :param i: linha i, referente aos valores de remaningPoints
-    :param j: coluna j, referente aos valores de days
+    :param j: potencia do somatório
     :return: valor do somatório
     """
-    return 0
+    print("Calculando item {} da matriz A(T)*A ...".format(j))
+    valReturn = 0
+    for i in range(len(days)):
+        valReturn += days[i]**j
 
-generateMatrix()
+    return valReturn
+
+
+def calculateSumForYmatrix(j):
+    """
+    Realiza o somátorio do elemento (j) para ser posto na matriz A(T)*Y.
+    :param j: potencia do somatório
+    :return: valor do somatório
+    """
+    print("Calculando item {} da matriz A(T)*Y...".format(j))
+    valReturn = 0
+    for i in range(len(days)):
+        valReturn += (days[i]**j * remaningPoints[i])
+
+    return valReturn
+
+
+def init():
+    calculateAmatrix()
+    calculateYmatrix()
+
+
+init()
