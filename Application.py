@@ -1,7 +1,6 @@
 from LinearRegression import LinearRegression
 from matplotlib import style
 import matplotlib.pyplot as plt
-import matplotlib.patches as patches
 
 class Application(object):
     # Dias em que as medições foram realizadas
