@@ -67,7 +67,6 @@ for i in range(0, 2):
     for j in range(0, 2):
         matrixA[i].append(self._calculateSumForAmatrix(i + j))
 
-print(matrixA)
 return matrixA
 ```
 #### calculateSumForAmatrix(position)
@@ -86,7 +85,6 @@ matrixY = []
 for i in range(0, 2):
     matrixY.insert(i, self._calculateSumForYmatrix(i))
 
-print(matrixY)
 return matrixY
 ```
 #### calculateSumForYmatrix(position)
