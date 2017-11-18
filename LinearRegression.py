@@ -67,6 +67,10 @@ class LinearRegression(object):
         return valReturn
 
     def _resolveLinearRegression(self):
+        """
+        Pega a matriz (A^T)A e a matriz (A^T)Y, e resolve o sistema linear usando a biblioteca numpy.
+        :return: Vetor X com a solução do sistema
+        """
         aMatrix = self._calculateAmatrix()
         yMatrix = self._calculateYmatrix()
         xVector = numpy.linalg.solve(aMatrix, yMatrix)
@@ -74,9 +78,9 @@ class LinearRegression(object):
 
     def _getPhi(self, x):
         """
-        phi(x) = ax + b
+        y = ax + b
         :param x:
-        :return:
+        :return: y
         """
         xVector = self._resolveLinearRegression()
         return xVector[1]*x + xVector[0]
@@ -94,9 +98,18 @@ class LinearRegression(object):
         return returnArr
 
     def _getXSize(self):
+        """
+        Pega o valor de x do zero da função aproximadora e adiciona cinco valores,
+        Apenas para tornar a visualização dos dados mais agradável.
+        :return: valor máximo de x
+        """
         return int(self._getZeroFunction())+5
 
     def getXAxis(self):
+        """
+        Gera um array com as x posições.
+        :return: array com x posições
+        """
         xAxis = []
 
         for x in range(self._getXSize()):
