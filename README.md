@@ -30,15 +30,79 @@ A classe [LinearRegression](LinearRegression.py) será responsável por toda a r
 Instanciada a classe, já é possível realizar o cálculo. Para tal, basta chamar o método [getLinearFunction()](#getlinearfunction). Este método retorna um array com os valores y da função aproximadora no ponto (posição no vetor) x.   
 #### getLinearFunction()
 O método getLinearFunction() chama a função [getPhi(x)](#getphix) para cada x entre 0 e phi(x)=0 da função aproximadora. O método responsável por encontrar o valor de x para phi(x)=0 é o método [getXSize()](#getxsize).
+``` python
+returnArr = []
+for x in range(self._getXSize()):
+    returnArr.insert(x, self._getPhi(x))
+
+return returnArr
+```
 #### getXSize()
+``` python
+return int(self._getZeroFunction())+5
+```
 #### getZeroFunction()
+``` python
+xVector = self._resolveLinearRegression()
+yZero = -xVector[0]/xVector[1]
+return yZero
+```
 #### resolveLinearRegression()
+``` python
+aMatrix = self._calculateAmatrix()
+yMatrix = self._calculateYmatrix()
+xVector = numpy.linalg.solve(aMatrix, yMatrix)
+return xVector
+```
 #### calculateAmatrix()
+``` python
+matrixA = []
+for i in range(0, 2):
+    matrixA.append([])
+    for j in range(0, 2):
+        matrixA[i].append(self._calculateSumForAmatrix(i + j))
+
+print(matrixA)
+return matrixA
+```
 #### calculateSumForAmatrix()
+``` python
+valReturn = 0
+for i in range(len(self.xValues)):
+    valReturn += self.xValues[i] ** j
+
+return valReturn
+```
 #### calculateYmatrix()
+``` python
+matrixY = []
+for i in range(0, 2):
+    matrixY.insert(i, self._calculateSumForYmatrix(i))
+
+print(matrixY)
+return matrixY
+```
 #### calculateSumForYmatrix()
+``` python
+valReturn = 0
+for i in range(len(self.xValues)):
+    valReturn += (self.xValues[i] ** j * self.yValues[i])
+
+return valReturn
+```
 #### getXAxis()
+``` python
+xAxis = []
+for x in range(self._getXSize()):
+    xAxis.insert(x, x)
+
+return xAxis
+```
 #### getPhi(x)
+``` python
+xVector = self._resolveLinearRegression()
+return xVector[1]*x + xVector[0]
+```
 
 ## Estudo de casos
 ## Resultados
