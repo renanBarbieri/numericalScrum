@@ -20,6 +20,7 @@ Onde,
 ![Matriz A Transposta vezes A](/images/matrix_at-a.gif)   
 ![Matriz A Transposta vezes Y](/images/matrix_at-y.gif)    
 #### Caso Polinomial
+https://www.codecogs.com/latex/eqneditor.php
 
 ## Implementação
 ### Caso Linear
@@ -38,18 +39,19 @@ for x in range(self._getXSize()):
 return returnArr
 ```
 #### getXSize()
-Apenas pega o valor de x do zero da função aproximadora, pelo método [getZeroFunction()](#getZeroFunction), e adiciona cinco valores, com o intuito de tornar a visualização dos dados mais agradável.
+Apenas pega o valor de x do zero da função aproximadora, pelo método [getZeroFunction()](#getzerofunction), e adiciona cinco valores, com o intuito de tornar a visualização dos dados mais agradável.
 ``` python
 return int(self._getZeroFunction())+5
 ```
 #### getZeroFunction()
-Após solicitar a solução do problema pelo método [resolveLinearRegression()](#resolveLinearRegression), encontra o valor de ![Valor de x quando y é zero](/images/eq_zeroy.gif) quando y=0.
+Após solicitar a solução do problema pelo método [resolveLinearRegression()](#resolvelinearregression), encontra o valor de ![Valor de x quando y é zero](/images/eq_zeroy.gif) quando y=0.
 ``` python
 xVector = self._resolveLinearRegression()
 yZero = -xVector[0]/xVector[1]
 return yZero
 ```
 #### resolveLinearRegression()
+Após gerada a matriz (A^T)A, pelo método [calculateAmatrix()](#calculateamatrix), e a matriz (A^T)Y, pelo método [calculateYmatrix()](#calculateymatrix), utiliza a resolução de sistema linear fornecida pela biblioteca numpy. O resultado da operação é o vetor X.
 ``` python
 aMatrix = self._calculateAmatrix()
 yMatrix = self._calculateYmatrix()
@@ -57,6 +59,7 @@ xVector = numpy.linalg.solve(aMatrix, yMatrix)
 return xVector
 ```
 #### calculateAmatrix()
+Utiliza o método [calculateSumForAmatrix(position)](#calculatesumforamatrixposition) para gerar a matriz (A^T)A do sistema linear 
 ``` python
 matrixA = []
 for i in range(0, 2):
@@ -67,15 +70,17 @@ for i in range(0, 2):
 print(matrixA)
 return matrixA
 ```
-#### calculateSumForAmatrix()
+#### calculateSumForAmatrix(position)
+De acordo com a posição passada, realiza o somatório de ![x elevado a position](/images/pow_x-position.gif). O valor da posição está entre 0 e 2.
 ``` python
 valReturn = 0
 for i in range(len(self.xValues)):
-    valReturn += self.xValues[i] ** j
+    valReturn += self.xValues[i] ** position
 
 return valReturn
 ```
 #### calculateYmatrix()
+Utiliza o método [calculateSumForYmatrix(position)](#calculatesumforymatrixposition) para gerar a matriz (A^T)Y do sistema linear
 ``` python
 matrixY = []
 for i in range(0, 2):
@@ -84,7 +89,8 @@ for i in range(0, 2):
 print(matrixY)
 return matrixY
 ```
-#### calculateSumForYmatrix()
+#### calculateSumForYmatrix(position)
+De acordo com a posição passada, realiza o somatório de ![x elevado a position (vezes) y elevado a position](/images/pow_xy-position.gif). O valor da posição está entre 0 e 2.
 ``` python
 valReturn = 0
 for i in range(len(self.xValues)):
@@ -93,6 +99,7 @@ for i in range(len(self.xValues)):
 return valReturn
 ```
 #### getXAxis()
+Gera um array com as x posições. O tamanho desse array é gerado pelo método [getXSize()](#getzsize) 
 ``` python
 xAxis = []
 for x in range(self._getXSize()):
@@ -101,10 +108,13 @@ for x in range(self._getXSize()):
 return xAxis
 ```
 #### getPhi(x)
+Calcula o valor da função ax+b, de acordo com o x passado. Utiliza o método [resolveLinearRegression()](#resolvelinearregression) para popular o vetor com os valores de x. 
 ``` python
 xVector = self._resolveLinearRegression()
 return xVector[1]*x + xVector[0]
 ```
+
+### Caso Polinomial
 
 ## Estudo de casos
 ## Resultados
