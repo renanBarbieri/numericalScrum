@@ -38,10 +38,12 @@ for x in range(self._getXSize()):
 return returnArr
 ```
 #### getXSize()
+Apenas pega o valor de x do zero da função aproximadora, pelo método [getZeroFunction()](#getZeroFunction), e adiciona cinco valores, com o intuito de tornar a visualização dos dados mais agradável.
 ``` python
 return int(self._getZeroFunction())+5
 ```
 #### getZeroFunction()
+Após solicitar a solução do problema pelo método [resolveLinearRegression()](#resolveLinearRegression), encontra o valor de ![Valor de x quando y é zero](/images/eq_zeroy.gif) quando y=0.
 ``` python
 xVector = self._resolveLinearRegression()
 yZero = -xVector[0]/xVector[1]
