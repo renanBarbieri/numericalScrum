@@ -82,6 +82,10 @@ class LinearRegression(object):
         return xVector[1]*x + xVector[0]
 
     def getLinearFunction(self):
+        """
+        Gera um array de valores de phi(x), que representa o valor Y da função aproximadora no ponto X
+        :return: array de valores de phi(x)
+        """
         returnArr = []
 
         for x in range(self._getXSize()):

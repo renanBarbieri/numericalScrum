@@ -4,12 +4,11 @@ Em alguns momentos, nem todas as tarefas da sprint atual conseguem ser realizada
 ## A Ideia
 É bem comum a utilização do gráfico de Burndown nas equipes de scrum para medir a velocidade em que as tarefas estão sendo realizadas. Neste gráfico temos a informação de todo o esforço restante para que a sprint seja entregue. Nele não possuímos dados que indiquem um prazo mais real de entrega de todas as tarefas, mas podemos utilizar os dados já inseridos para tentar fazer uma projeção de quando que isso irá ocorrer.   
 Desta forma, a ideia consiste em pegar esses dados e gerar uma função que represente o ritmo de entrega da equipe. Desta forma podemos encontrar o ![Zero da função](/images/func_of-x_zero.gif), que representa o momento em que a sprint será entregue se a equipe mantiver o ritmo atual.   
-## Implementação
+
 ### Minimos Quadrados
 O método dos mínimos quadrados tem como objetivo encontrar uma função que seja uma boa aproximação para um conjunto de dados, possibilitando analizar, com uma certa margem de erro, dados que ainda não foram disponibilizados.   
 #### Caso Linear
 A maneira mais rústica para tentar solucionar o problema é aproximar para a função linear ![Função Linear](/images/linearEquation.gif). Desta forma, o problema passa a ser encontrar o 'a' e o 'b' desta equação.
-
 Para que a aproximação seja o mais fiel possível aos dados reais, é necessário minimizar a soma das diferenças entre a curva aproximadora e o conjunto de dados fornecidos. Essa diferença pode gerar valores nulos, o que significa que a função aproximada é "real". Entretanto, há casos em que a diferença é nula mas a função aproximadora é muito distante da realidade.   
 Para contornar este problema, é minimizado o quadrado das diferenças (o que justifica o nome do método).    
 Tendo *n* como a quantidade de elementos no conjunto de dados, o problema pode ser matematicamente representado da seguinte forma: ![Representação do problema](/images/func_of-s_ba.gif)   
@@ -19,11 +18,27 @@ Após algumas manipulações, chega-se ao seguinte sistema linear:
 Onde,   
 ![Matriz X](/images/matrix_x.gif)   
 ![Matriz A Transposta vezes A](/images/matrix_at-a.gif)   
-![Matriz A Transposta vezes Y](/images/matrix_at-y.gif)   
-
-
-
+![Matriz A Transposta vezes Y](/images/matrix_at-y.gif)    
 #### Caso Polinomial
+
+## Implementação
+### Caso Linear
+A classe [LinearRegression](LinearRegression.py) será responsável por toda a resolução do problema. Para instanciar a classe, é necessário passar dois parâmetros:   
+* xInputs - Array de tamano N referente aos valores de X do conjunto de dados
+* yInputs - Array de tamano N referente aos valores de Y do conjunto de dados
+
+Instanciada a classe, já é possível realizar o cálculo. Para tal, basta chamar o método [#getLinearFunction()](getLinearFunction()). Este método retorna um array com os valores y da função aproximadora no ponto (posição no vetor) x.   
+#### getLinearFunction()
+O método getLinearFunction() chama a função [#getPhi(x)](getPhi(x)) para cada x entre 0 e phi(x)=0 da função aproximadora. O método responsável por encontrar o valor de x para phi(x)=0 é o método [#getXSize()](getXSize()).
+#### getXSize()
+#### getZeroFunction()
+#### resolveLinearRegression()
+#### calculateAmatrix()
+#### calculateSumForAmatrix()
+#### calculateYmatrix()
+#### calculateSumForYmatrix()
+#### getXAxis()
+#### getPhi(x)
 
 ## Estudo de casos
 ## Resultados
