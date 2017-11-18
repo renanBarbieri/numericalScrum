@@ -27,9 +27,9 @@ A classe [LinearRegression](LinearRegression.py) será responsável por toda a r
 * xInputs - Array de tamano N referente aos valores de X do conjunto de dados
 * yInputs - Array de tamano N referente aos valores de Y do conjunto de dados
 
-Instanciada a classe, já é possível realizar o cálculo. Para tal, basta chamar o método [getLinearFunction()](#getLinearFunction()). Este método retorna um array com os valores y da função aproximadora no ponto (posição no vetor) x.   
+Instanciada a classe, já é possível realizar o cálculo. Para tal, basta chamar o método [getLinearFunction()](#getLinearFunction). Este método retorna um array com os valores y da função aproximadora no ponto (posição no vetor) x.   
 #### getLinearFunction()
-O método getLinearFunction() chama a função [getPhi(x)](#getPhi(x)) para cada x entre 0 e phi(x)=0 da função aproximadora. O método responsável por encontrar o valor de x para phi(x)=0 é o método [getXSize()](#getXSize()).
+O método getLinearFunction() chama a função [getPhi(x)](#getPhix) para cada x entre 0 e phi(x)=0 da função aproximadora. O método responsável por encontrar o valor de x para phi(x)=0 é o método [getXSize()](#getXSize).
 #### getXSize()
 #### getZeroFunction()
 #### resolveLinearRegression()
