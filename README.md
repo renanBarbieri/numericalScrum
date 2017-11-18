@@ -1,13 +1,36 @@
 # Análise das Entregas no Scrum
 O processo do Scrum consiste, de maneira bem superficial, em listar todas as tarefas do projeto e colocá-las no Product Backlog. Feito isso, um conjunto de tarefas é transferido para o Sprint Backlog atual para serem desenvolvidas e assim é dado o início do desenvolvimento.   
 Em alguns momentos, nem todas as tarefas da sprint atual conseguem ser realizadas a tempo de se entregar. Em outros momentos a equipe consegue entregar mais tarefas do que se foi planejado. Esses momentos acabam interferindo na data de entrega e assim, perdendo um pouco a previsão da mesma. E se fosse possível dar um pouco mais de previsão de quando o projeto irá terminar?
-## Ideia
+## A Ideia
 É bem comum a utilização do gráfico de Burndown nas equipes de scrum para medir a velocidade em que as tarefas estão sendo realizadas. Neste gráfico temos a informação de todo o esforço restante para que a sprint seja entregue. Nele não possuímos dados que indiquem um prazo mais real de entrega de todas as tarefas, mas podemos utilizar os dados já inseridos para tentar fazer uma projeção de quando que isso irá ocorrer.   
-Desta forma, a ideia consiste em pegar esses dados e aplicar o método de mínimos quadrados para discretizar a "função de entrega" e assim ter uma previsão de quando que a sprint será entregue se a equipe mantiver o ritmo atual.
+Desta forma, a ideia consiste em pegar esses dados e gerar uma função que represente o ritmo de entrega da equipe. Desta forma podemos encontrar o ![Zero da função](/images/func_of-x_zero.gif), que representa o momento em que a sprint será entregue se a equipe mantiver o ritmo atual.   
 ## Implementação
+### Minimos Quadrados
+O método dos mínimos quadrados tem como objetivo encontrar uma função que seja uma boa aproximação para um conjunto de dados, possibilitando analizar, com uma certa margem de erro, dados que ainda não foram disponibilizados.   
+#### Caso Linear
+A maneira mais rústica para tentar solucionar o problema é aproximar para a função linear ![Função Linear](/images/linearEquation.gif). Desta forma, o problema passa a ser encontrar o 'a' e o 'b' desta equação.
+
+Para que a aproximação seja o mais fiel possível aos dados reais, é necessário minimizar a soma das diferenças entre a curva aproximadora e o conjunto de dados fornecidos. Essa diferença pode gerar valores nulos, o que significa que a função aproximada é "real". Entretanto, há casos em que a diferença é nula mas a função aproximadora é muito distante da realidade.   
+Para contornar este problema, é minimizado o quadrado das diferenças (o que justifica o nome do método).    
+Tendo *n* como a quantidade de elementos no conjunto de dados, o problema pode ser matematicamente representado da seguinte forma: ![Representação do problema](/images/func_of-s_ba.gif)   
+Ou, em forma matricial, o problema é mostrado como ![Problema em forma matricial](/images/matrix_s_ba.gif)   
+Após algumas manipulações, chega-se ao seguinte sistema linear:   
+![Sistema linear](/images/linearProblem.gif)   
+Onde,   
+![Matriz X](/images/matrix_x.gif)   
+![Matriz A Transposta vezes A](/images/matrix_at-a.gif)   
+![Matriz A Transposta vezes Y](/images/matrix_at-y.gif)   
+
+
+
+#### Caso Polinomial
+
 ## Estudo de casos
 ## Resultados
 
 ## Referências
 [Blog ScrumHalf](http://blog.myscrumhalf.com/2012/01/burndown-chart-medindo-o-progresso-de-sua-sprint-e-trazendo-indicativos-do-processo-de-trabalho-da-equipe/)   
-[DesenvolvimentoAgil.com.br](http://www.desenvolvimentoagil.com.br/scrum/)
+[DesenvolvimentoAgil.com.br](http://www.desenvolvimentoagil.com.br/scrum/)   
+[Cálculo Numérico, Aspectos Teóricos e Computacionais - Márcia A. Gomes Ruggiero e Vera Lúcia da Rocha Lopes]()      
+[Mínimos Quadrados - Wikipédia](https://pt.wikipedia.org/wiki/M%C3%A9todo_dos_m%C3%ADnimos_quadrados)   
+[Ajuste de curvas por quadrados mínimos lineares - Felipe Aguiar e Wanderley Moreira](http://www.mat.ufmg.br/gaal/aplicacoes/quadrados_minimos.pdf)
