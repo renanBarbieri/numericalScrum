@@ -1,4 +1,5 @@
 from LinearRegression import LinearRegression
+from PolinomialRegression import PolinomialRegression
 from matplotlib import style
 import matplotlib.pyplot as plt
 
@@ -11,9 +12,11 @@ class Application(object):
     def __init__(self):
         self._initGraph()
         linearReg = LinearRegression(self._days, self._remaningPoints)
+        poliReg = PolinomialRegression(self._days, self._remaningPoints, 3)
 
         plt.plot(self._days, self._remaningPoints)
         plt.plot(linearReg.getXAxis(), linearReg.getLinearFunction())
+        plt.plot(poliReg.getXAxis(), poliReg.getFunction())
         self._plotGraph()
 
     def _initGraph(self):

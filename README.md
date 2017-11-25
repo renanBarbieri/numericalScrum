@@ -1,6 +1,3 @@
-**Universidade Federal do Rio de Janeiro**   
-*Autor: Renan Hozumi Barbieri*   
-*DRE: 111201610*
 # Análise das Entregas no Scrum
 ## Introdução
 O processo do Scrum consiste, de maneira bem superficial, em listar todas as tarefas do projeto e colocá-las no Product Backlog. Feito isso, um conjunto de tarefas é transferido para o Sprint Backlog atual para serem desenvolvidas e assim é dado o início do desenvolvimento.   
