@@ -31,6 +31,8 @@ A resolução do problema segue o mesmo conceito do caso linear. A diferença es
 A classe [LinearRegression](LinearRegression.py) será responsável por toda a resolução do problema linear. Para instanciar a classe, é necessário passar dois parâmetros:   
 * xInputs - Array de tamano N referente aos valores de X do conjunto de dados
 * yInputs - Array de tamano N referente aos valores de Y do conjunto de dados   
+
+   
 Esta classe é filha de [PolinomialRegression](PolinomialRegression.py), que é responsável pela resolução de um problema polinomial e necessita de mais um parâmetro para ser instanciada:
 * polinomialDegree - Número inteiro que representa o grau da função aproximadora desejada.
 
@@ -128,6 +130,60 @@ return xAxis
 ```
 
 ## Estudo de casos
+Para analisar o comportamento da metodologia proposta, foram utilizados dados das sprints de um projeto desenvolvido na Radix do período de 30 de Maio de 2017 a 24 de Julho de 2017, observando 2 sprints¹.    
+Para cada sprint realizada, foram realizados 4 análises:   
+1. Gerar uma função apenas com os dados da primeira medição
+2. Gerar uma função com os dados das três primeiras medições
+3. Gerar uma função faltando apenas três medições para o fim da sprint
+4. Gerar uma função substituíndo dados intermediários por 0 (simulando falta de informação)
+
+### Análises
+#### Sprint 01
+Para essa sprint, o desempenho do time foi:   
+         
+Data da Medição | Pontos Restantes     
+--------------- | ----------------   
+30 de Maio      | 108
+31 de Maio      | 108
+01 de Junho     | 108
+02 de Junho     | 108
+05 de Junho     | 108
+06 de Junho     | 108
+07 de Junho     | 108
+08 de Junho     | 108
+09 de Junho     | 108
+12 de Junho     | 108
+13 de Junho     | 108
+14 de Junho     | 108
+16 de Junho     | 108
+19 de Junho     | 108
+20 de Junho     | 108
+21 de Junho     | 67 
+##### Apenas primeira medição
+##### Três primeiras medições
+##### Faltando três medições para o fim da sprint
+##### Substituíndo dados intermediários por 0
+#### Sprint 03
+Para essa sprint, o desempenho do time foi:   
+ 
+Data da Medição | Pontos Restantes     
+--------------- | ----------------   
+10 de Julho     | 143
+11 de Julho     | 141
+12 de Julho     | 141
+13 de Julho     | 139
+14 de Julho     | 134
+17 de Julho     | 131
+18 de Julho     | 110
+19 de Julho     | 76
+20 de Julho     | 64
+21 de Julho     | 37
+24 de Julho     | 13
+
+##### Apenas primeira medição
+##### Três primeiras medições
+##### Faltando três medições para o fim da sprint
+##### Substituíndo dados intermediários por 0
 ## Discussão e Conclusões
 
 ## Referências
@@ -136,3 +192,6 @@ return xAxis
 [Cálculo Numérico, Aspectos Teóricos e Computacionais - Márcia A. Gomes Ruggiero e Vera Lúcia da Rocha Lopes]()      
 [Mínimos Quadrados - Wikipédia](https://pt.wikipedia.org/wiki/M%C3%A9todo_dos_m%C3%ADnimos_quadrados)   
 [Ajuste de curvas por quadrados mínimos lineares - Felipe Aguiar e Wanderley Moreira](http://www.mat.ufmg.br/gaal/aplicacoes/quadrados_minimos.pdf)
+
+###### Nota
+1. Foram analisadas apenas a primeira e a terceira sprint. A segunda sprint não possuída dados suficientes para que a análise fosse realizada por completo.  
