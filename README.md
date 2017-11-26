@@ -2,8 +2,8 @@
 ## Introdução
 O processo do Scrum consiste, de maneira bem superficial, em listar todas as tarefas do projeto e colocá-las no Product Backlog. Feito isso, um conjunto de tarefas é transferido para o Sprint Backlog atual para serem desenvolvidas e assim é dado o início do desenvolvimento.   
 Em alguns momentos, nem todas as tarefas da sprint atual conseguem ser realizadas a tempo de se entregar. Em outros momentos a equipe consegue entregar mais tarefas do que se foi planejado. Esses momentos acabam interferindo na data de entrega e assim, perdendo um pouco a previsão da mesma. E se fosse possível dar um pouco mais de previsão de quando o projeto irá terminar?
-É bem comum a utilização do gráfico de Burndown nas equipes de scrum para medir a velocidade em que as tarefas estão sendo realizadas. Neste gráfico temos a informação de todo o esforço restante para que a sprint seja entregue. Nele não possuímos dados que indiquem um prazo mais real de entrega de todas as tarefas, mas podemos utilizar os dados já inseridos para tentar fazer uma projeção de quando que isso irá ocorrer.   
-Desta forma, a ideia consiste em pegar esses dados e gerar uma função que represente o ritmo de entrega da equipe. Desta forma podemos encontrar o ![Zero da função](/images/func_of-x_zero.gif), que representa o momento em que a sprint será entregue se a equipe mantiver o ritmo atual.   
+É bem comum a utilização do gráfico de Burndown nas equipes de scrum para medir a velocidade em que as tarefas estão sendo realizadas. Neste gráfico temos a informação de todo o esforço restante para que a sprint seja entregue. Nele não possuímos dados que indiquem um prazo mais real de entrega de todas as tarefas e nem de quantos pontos restariam ao final da sprint, mas podemos utilizar os dados já inseridos para tentar fazer uma projeção de quando que isso irá ocorrer.   
+Desta forma, a ideia consiste em pegar esses dados e gerar uma função que represente o ritmo de entrega da equipe. Desta forma podemos encontrar o ![Zero da função](/images/func_of-x_zero.gif), que representa o momento em que a sprint será entregue se a equipe mantiver o ritmo atual, e também podemos ter uma noção de quantos pontos faltarão para serem entregues ao final da sprint.   
 
 ## Metodologia
 ### Minimos Quadrados
@@ -132,11 +132,12 @@ return xAxis
 ## Estudo de casos
 Para analisar o comportamento da metodologia proposta, foram utilizados dados das sprints de um projeto desenvolvido na Radix do período de 30 de Maio de 2017 a 24 de Julho de 2017, observando 2 sprints¹.    
 Para cada sprint realizada, foram realizados 4 análises:   
-1. Gerar uma função apenas com os dados da primeira medição
-2. Gerar uma função com os dados das três primeiras medições
+1. Gerar uma função com os dados das três primeiras medições
+2. Gerar uma função com os dados das cinco primeiras medições
 3. Gerar uma função faltando apenas três medições para o fim da sprint
-4. Gerar uma função substituíndo dados intermediários por 0 (simulando falta de informação)
-
+4. Gerar uma função com todas as medições realizadas
+   
+Para aproximar a função no caso polinomial, foram realizados testes apenas com uma função do 3º grau.
 ### Análises
 #### Sprint 01
 Para essa sprint, o desempenho do time foi:   
@@ -159,10 +160,26 @@ Data da Medição | Pontos Restantes
 19 de Junho     | 108
 20 de Junho     | 108
 21 de Junho     | 67 
-##### Apenas primeira medição
 ##### Três primeiras medições
+Ao rodar o programa neste caso, obtivemos o seguinte erro ao tentar pegar o zero da função linear:
+``` shell 
+OverflowError: cannot convert float infinity to integer
+```
+Isso significa que a função linear encontrada não possui um zero de função. O que é um resultado esperado, visto que os pontos restantes não modificaram e assim, criam uma reta em y=108.   
+Usando apenas o caso polinomial, foi obtido este resultado:   
+![Estudo de caso da primeira sprint com 3 medições](/images/sp1_c1.png)
+##### Cinco primeiras medições
+Assim como na primeira análise, não foi possível encontrar o zero da função linear.
+Usando apenas o caso polinomial, foi obtido este resultado:   
+![Estudo de caso da primeira sprint com 5 medições](/images/sp1_c2.png)
 ##### Faltando três medições para o fim da sprint
-##### Substituíndo dados intermediários por 0
+Assim como nas demais análise, não foi possível encontrar o zero da função linear.
+Usando apenas o caso polinomial, o resultado obtido foi o mesmo da segunda análise:   
+![Estudo de caso da primeira sprint faltando 3 medições](/images/sp1_c3.png)
+##### Todas as medições realizadas
+Nesta análise, foi possível obter resultado tanto no caso linear quando no caso polinomial. Segue abaixo o resultado obtido:
+![Estudo de caso da primeira sprint com todas as medições - Parte 1](/images/sp1_c4(a).png)
+![Estudo de caso da primeira sprint com todas as medições - Parte 2](/images/sp1_c4(b).png)
 #### Sprint 03
 Para essa sprint, o desempenho do time foi:   
  
@@ -180,12 +197,26 @@ Data da Medição | Pontos Restantes
 21 de Julho     | 37
 24 de Julho     | 13
 
-##### Apenas primeira medição
 ##### Três primeiras medições
+Como os pontos restantes foram decaindo, foi possível obeter resultados desde a primeira análise:   
+![Estudo de caso da terceira sprint com 3 medições - Parte 1](/images/sp2_c1(a).png) 
+![Estudo de caso da terceira sprint com 3 medições - Parte 2](/images/sp2_c1(b).png)
+##### Cinco primeiras medições   
+![Estudo de caso da primeira sprint com 5 medições](/images/sp2_c2(a).png) 
+![Estudo de caso da primeira sprint com 5 medições](/images/sp2_c2(b).png)
 ##### Faltando três medições para o fim da sprint
-##### Substituíndo dados intermediários por 0
+![Estudo de caso da primeira sprint faltando 3 medições](/images/sp2_c3(a).png) 
+![Estudo de caso da primeira sprint faltando 3 medições](/images/sp2_c3(b).png)
+##### Todas as medições realizadas
+![Estudo de caso da primeira sprint com todas as medições - Parte 1](/images/sp2_c4.png)
 ## Discussão e Conclusões
-
+Para definir se a utilização do método foi eficiente ou não, foi realizada uma análise de quantos pontos restavam ao final da sprint. Na entrega da primeira sprint restaram 64 pontos. Na entrega da terceira sprint retaram 13 pontos.    
+Após análise dos gráficos gerados, podemos afirmar que a utilização de mínimos quadrados no caso linear não é recomendada para tentar projetar um futuro andamento do time. Essa aproximação ficar muito distante do real quando há algum problema nas entregas do projeto.   
+O peso dos problemas² na projeção das entregas usando o caso linear é muito alto, colocando a previsão de conclusão muito além do que acontece e uma projeção de pontos restantes muito acima do real, como visto em todas as análises da primeira sprint e da terceira sprint.   
+Já a utilização de mínimos quadrados para gerar uma função aproximadora de grau 3 parece ser uma solução plausível, pelo menos quando se tem mais algumas medições e sem muitos problemas no projeto.   
+A primeira sprint é um caso muito particular que não acontece sempre, mas usando ela como base, pode-se observar que se o projeto não evoluir diariamente, nenhuma projeção testada neste trabalho possui um resultado aceitável.    
+Na segunda sprint, que já é um caso bem mais comum, foi possível realizar uma análise mais detalhada e conseguimos assim ter uma projeção mais próxima do real. Apesar de não ter acertado nenhuma projeção, a utilização do caso polinomial (com polinômio de 3º grau) do mínimos quadrados se mostrou um caminho a ser seguido para tentar realizar essa aproximação.
+   
 ## Referências
 [Blog ScrumHalf](http://blog.myscrumhalf.com/2012/01/burndown-chart-medindo-o-progresso-de-sua-sprint-e-trazendo-indicativos-do-processo-de-trabalho-da-equipe/)   
 [DesenvolvimentoAgil.com.br](http://www.desenvolvimentoagil.com.br/scrum/)   
@@ -194,4 +225,5 @@ Data da Medição | Pontos Restantes
 [Ajuste de curvas por quadrados mínimos lineares - Felipe Aguiar e Wanderley Moreira](http://www.mat.ufmg.br/gaal/aplicacoes/quadrados_minimos.pdf)
 
 ###### Nota
-1. Foram analisadas apenas a primeira e a terceira sprint. A segunda sprint não possuída dados suficientes para que a análise fosse realizada por completo.  
+1. Foram analisadas apenas a primeira e a terceira sprint. A segunda sprint não possuída dados suficientes para que a análise fosse realizada por completo.
+2. Quando há um problema no projeto, a entrega de pontos fica prejudicada. Isso é claramente visto na primeira sprint, em que 15 das 16 coletas de dados o time não entregou nenhum ponto do projeto.  

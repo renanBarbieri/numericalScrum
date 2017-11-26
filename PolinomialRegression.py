@@ -30,7 +30,7 @@ class PolinomialRegression(object):
         Retorna um valor arbitrário.
         :return: valor máximo de x
         """
-        return 15
+        return 105
 
     def _getPhi(self, x):
         """
