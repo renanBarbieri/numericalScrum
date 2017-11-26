@@ -1,6 +1,5 @@
 from PolinomialRegression import PolinomialRegression
 
-
 class LinearRegression(PolinomialRegression):
 
     def __init__(self, xInputs, yInputs):

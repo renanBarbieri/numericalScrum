@@ -1,6 +1,5 @@
 import numpy
 
-
 class PolinomialRegression(object):
 
     _degree = 1
