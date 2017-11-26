@@ -70,3 +70,5 @@ class Application(object):
         plt.show()
         style.use('ggplot')
 
+
+Application()
