@@ -21,17 +21,22 @@ Onde,
 ![Matriz A Transposta vezes A](/images/matrix_at-a.gif)   
 ![Matriz A Transposta vezes Y](/images/matrix_at-y.gif)    
 #### Caso Polinomial
-https://www.codecogs.com/latex/eqneditor.php
+Para tentar encontrar um aproximação mais fiel à realidade, podemos utiliar o caso polinomial do mínimos quadrados. Desta maneira, teremos que encontrar as variáveis ![Variáveis Polinomiais](/images/var_polinomial.gif) da equação ![Função Polinomial](/images/polinomialEquation.gif).   
+A resolução do problema segue o mesmo conceito do caso linear. A diferença está na construção do sistema linear ![Sistema linear](/images/linearProblem.gif), onde no caso polinomial:   
+![Matriz X](/images/matrix_x_poli.gif)   
+![Matriz A Transposta vezes A](/images/matrix_at-a_poli.gif)   
+![Matriz A Transposta vezes Y](/images/matrix_at-y_poli.gif)   
 
 ## Implementação
-### Caso Linear
-A classe [LinearRegression](LinearRegression.py) será responsável por toda a resolução do problema. Para instanciar a classe, é necessário passar dois parâmetros:   
+A classe [LinearRegression](LinearRegression.py) será responsável por toda a resolução do problema linear. Para instanciar a classe, é necessário passar dois parâmetros:   
 * xInputs - Array de tamano N referente aos valores de X do conjunto de dados
-* yInputs - Array de tamano N referente aos valores de Y do conjunto de dados
+* yInputs - Array de tamano N referente aos valores de Y do conjunto de dados   
+Esta classe é filha de [PolinomialRegression](PolinomialRegression.py), que é responsável pela resolução de um problema polinomial e necessita de mais um parâmetro para ser instanciada:
+* polinomialDegree - Número inteiro que representa o grau da função aproximadora desejada.
 
-Instanciada a classe, já é possível realizar o cálculo. Para tal, basta chamar o método [getLinearFunction()](#getlinearfunction). Este método retorna um array com os valores y da função aproximadora no ponto (posição no vetor) x.   
-#### getLinearFunction()
-O método getLinearFunction() chama a função [getPhi(x)](#getphix) para cada x entre 0 e phi(x)=0 da função aproximadora. O método responsável por encontrar o valor de x para phi(x)=0 é o método [getXSize()](#getxsize).
+Instanciada as classes, já é possível realizar o cálculo. Para tal, basta chamar o método [getFunction()](#getfunction), que retorna um array com os valores y da função aproximadora no ponto (posição no vetor) x.    
+### getFunction()
+O método getFunction() chama a função [getPhi(x)](#getphix) para cada x entre 0 e algum valor dado pelo método [getXSize()](#getxsize).
 ``` python
 returnArr = []
 for x in range(self._getXSize()):
@@ -39,19 +44,32 @@ for x in range(self._getXSize()):
 
 return returnArr
 ```
-#### getXSize()
+### getXSize()
+#### Caso Linear
 Apenas pega o valor de x do zero da função aproximadora, pelo método [getZeroFunction()](#getzerofunction), e adiciona cinco valores, com o intuito de tornar a visualização dos dados mais agradável.
 ``` python
 return int(self._getZeroFunction())+5
 ```
-#### getZeroFunction()
+#### Caso Polinomial
+No caso polinomial, esta função retorna um inteiro abitrário, tendo que ser definido manualmente conforme a necessidade. 
+### getZeroFunction()
 Após solicitar a solução do problema pelo método [resolveLinearRegression()](#resolvelinearregression), encontra o valor de ![Valor de x quando y é zero](/images/eq_zeroy.gif) quando y=0.
 ``` python
 xVector = self._resolveLinearRegression()
 yZero = -xVector[0]/xVector[1]
 return yZero
 ```
-#### resolveLinearRegression()
+Este método só está disponível para o caso linear.
+### getPhi(x)
+Calcula o valor da função polinomial (no caso linear, esta função é ax+b), de acordo com o x passado. Utiliza o método [resolveLinearRegression()](#resolvelinearregression) para popular o vetor com os valores de x. 
+``` python
+xVector = self._resolveLinearRegression()
+result = 0
+for n in range(len(xVector)):
+    result += xVector[n]*pow(x, n)
+return result
+```
+### resolveLinearRegression()
 Após gerada a matriz (A^T)A, pelo método [calculateAmatrix()](#calculateamatrix), e a matriz (A^T)Y, pelo método [calculateYmatrix()](#calculateymatrix), utiliza a resolução de sistema linear fornecida pela biblioteca numpy. O resultado da operação é o vetor X.
 ``` python
 aMatrix = self._calculateAmatrix()
@@ -59,61 +77,55 @@ yMatrix = self._calculateYmatrix()
 xVector = numpy.linalg.solve(aMatrix, yMatrix)
 return xVector
 ```
-#### calculateAmatrix()
-Utiliza o método [calculateSumForAmatrix(position)](#calculatesumforamatrixposition) para gerar a matriz (A^T)A do sistema linear 
+### calculateAmatrix()
+Utiliza o método [calculateSumForAmatrix(position)](#calculatesumforamatrixposition) para gerar a matriz (A^T)A do sistema linear. O valor de matrixSize é definido na inicialização da classe. Seu valor é o valor do grau da função aproximadora acrescido de 1.      
+Exemplo: se a função for x²,  matrixSize terá o valor 3. 
 ``` python
 matrixA = []
-for i in range(0, 2):
+for i in range(0, self._matrixSize):
     matrixA.append([])
-    for j in range(0, 2):
+    for j in range(0, self._matrixSize):
         matrixA[i].append(self._calculateSumForAmatrix(i + j))
 
+print(matrixA)
 return matrixA
 ```
-#### calculateSumForAmatrix(position)
+### calculateSumForAmatrix(position)
 De acordo com a posição passada, realiza o somatório de ![x elevado a position](/images/pow_x-position.gif). O valor da posição está entre 0 e 2.
 ``` python
 valReturn = 0
-for i in range(len(self.xValues)):
-    valReturn += self.xValues[i] ** position
+for i in range(len(self._xValues)):
+    valReturn += self._xValues[i] ** j
 
 return valReturn
 ```
-#### calculateYmatrix()
+### calculateYmatrix()
 Utiliza o método [calculateSumForYmatrix(position)](#calculatesumforymatrixposition) para gerar a matriz (A^T)Y do sistema linear
 ``` python
 matrixY = []
-for i in range(0, 2):
+for i in range(0, self._matrixSize):
     matrixY.insert(i, self._calculateSumForYmatrix(i))
 
+print(matrixY)
 return matrixY
 ```
-#### calculateSumForYmatrix(position)
+### calculateSumForYmatrix(position)
 De acordo com a posição passada, realiza o somatório de ![x elevado a position (vezes) y elevado a position](/images/pow_xy-position.gif). O valor da posição está entre 0 e 2.
 ``` python
 valReturn = 0
-for i in range(len(self.xValues)):
-    valReturn += (self.xValues[i] ** j * self.yValues[i])
+for i in range(len(self._xValues)):
+    valReturn += (self._xValues[i] ** j * self._yValues[i])
 
 return valReturn
 ```
-#### getXAxis()
+### getXAxis()
 Gera um array com as x posições. O tamanho desse array é gerado pelo método [getXSize()](#getzsize) 
 ``` python
 xAxis = []
 for x in range(self._getXSize()):
     xAxis.insert(x, x)
-
 return xAxis
 ```
-#### getPhi(x)
-Calcula o valor da função ax+b, de acordo com o x passado. Utiliza o método [resolveLinearRegression()](#resolvelinearregression) para popular o vetor com os valores de x. 
-``` python
-xVector = self._resolveLinearRegression()
-return xVector[1]*x + xVector[0]
-```
-
-### Caso Polinomial
 
 ## Estudo de casos
 ## Discussão e Conclusões

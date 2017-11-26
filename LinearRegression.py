@@ -14,17 +14,6 @@ class LinearRegression(PolinomialRegression):
         """
         return int(self._getZeroFunction())+5
 
-    def getXAxis(self):
-        """
-        Gera um array com as x posições.
-        :return: array com x posições
-        """
-        xAxis = []
-
-        for x in range(self._getXSize()):
-            xAxis.insert(x, x)
-
-        return xAxis
 
     def _getZeroFunction(self):
         """
