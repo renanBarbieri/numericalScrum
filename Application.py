@@ -15,7 +15,7 @@ class Application(object):
         poliReg = PolinomialRegression(self._days, self._remaningPoints, 3)
 
         plt.plot(self._days, self._remaningPoints)
-        plt.plot(linearReg.getXAxis(), linearReg.getLinearFunction())
+        plt.plot(linearReg.getXAxis(), linearReg.getFunction())
         plt.plot(poliReg.getXAxis(), poliReg.getFunction())
         self._plotGraph()
 

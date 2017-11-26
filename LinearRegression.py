@@ -6,9 +6,6 @@ class LinearRegression(PolinomialRegression):
     def __init__(self, xInputs, yInputs):
         super().__init__(xInputs, yInputs, 1)
 
-    def getLinearFunction(self):
-        return super().getFunction()
-
     def _getXSize(self):
         """
         Pega o valor de x do zero da função aproximadora e adiciona cinco valores,

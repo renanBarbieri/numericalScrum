@@ -124,15 +124,4 @@ class PolinomialRegression(object):
         for x in range(self._getXSize()):
             xAxis.insert(x, x)
 
-        return xAxis
-    #
-    # def _getZeroFunction(self):
-    #     """
-    #     x = -b/a
-    #     :return:
-    #     """
-    #     xVector = self._resolveLinearRegression()
-    #     print("Vetor X é {}".format(xVector))
-    #     yZero = -xVector[0]/xVector[1]
-    #     print("A entrega está prevista para o dia {}".format(yZero))
-    #     return yZero
+
